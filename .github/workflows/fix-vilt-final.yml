@@ -1,0 +1,57 @@
+name: Fix ViLT final
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    if: ${{ github.event.head_commit.message != 'Fix ViLT LaTeX header [skip ci]' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fix LaTeX header
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path('vilt.tex')
+          s = path.read_text(encoding='utf-8')
+
+          s = s.replace(chr(7), r'\')
+          s = s.replace('\n\\usepackage{acro}\n\n\\DeclareAcronym{ict}{', '\n\\DeclareAcronym{ict}{', 1)
+
+          short_title = 'ViLT: A Retrieval-Augmented LLM Tutoring Framework for Subject-Specific Learning Support'
+          full_title = 'Design and Exploratory Evaluation of ViLT: A Retrieval-Augmented LLM Tutoring Framework for Subject-Specific Learning Support'
+          fixed_title = f'\\title[{short_title}]{{{full_title}}}'
+          s = re.sub(r'\\title\[ViLT: A Retrieval-Augmented LLM Tutoring Framework for Subject-Specific Learning Support\s*(?=\\author)', lambda _: fixed_title + '\n\n', s, count=1)
+
+          new_abs = r'''\abstract{Recent advances in \ac{ai}, chatbots, and \acp{llm} have created new opportunities for supporting students beyond the classroom. However, many LLM-based educational assistants remain general-purpose tools and are not explicitly grounded in the syllabus, materials, and pedagogical requirements of specific subjects. This paper presents \ac{vilt}, a \ac{rag} framework for deploying subject-specific LLM tutors in higher education. \ac{vilt} enables educators to provide course materials that are processed, indexed, and retrieved to generate answers aligned with each subject. The virtual tutor supports students by explaining concepts, providing examples, and answering subject-related questions, while structured prompts constrain its behavior to the available educational context. The framework also incorporates a feedback module and a learning analytics dashboard that summarizes student interactions through \acp{kpi}, helping educators monitor system usage and identify topics that may require further reinforcement. An exploratory evaluation was conducted in subjects from three universities in Spain and Colombia. The results show the feasibility of deploying \ac{vilt} across heterogeneous higher-education contexts and indicate positive perceptions from students and educators regarding its usefulness, precision, and pedagogical value.}'''
+          s = re.sub(r'\\abstract\{(?:Teaching and learning processes|Recent advances).*?pedagogical value\.\}', lambda _: new_abs, s, count=1, flags=re.S)
+
+          s = s.replace(r'\keywords{Virtual Tutoring, Large Language Models, Human-Computer Interaction, Online Education, Concept Reinforcement}', r'\keywords{Artificial Intelligence in Education, Large Language Models, Retrieval-Augmented Generation, Virtual Tutoring, Learning Analytics}')
+          s = s.replace(r'\glsresetall', r'\acresetall')
+
+          m = {'ICT':'ict','ViLT':'vilt','AI':'ai','AIEd':'aied','ML':'ml','NLP':'nlp','LLM':'llm','RAG':'rag','GPT':'gpt','PEFT':'peft','LoRA':'lora','MAS':'mas','AOSE':'aose','ABM':'abm','BDI':'bdi','KPI':'kpi'}
+          for old, new in m.items():
+              s = s.replace(f'\\glspl{{{old}}}', f'\\acp{{{new}}}')
+              s = s.replace(f'\\gls{{{old}}}', f'\\ac{{{new}}}')
+
+          path.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit
+        run: |
+          if git diff --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add vilt.tex
+          git commit -m "Fix ViLT LaTeX header [skip ci]"
+          git push
