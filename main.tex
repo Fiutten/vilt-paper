@@ -1,0 +1,6 @@
+% Temporary wrapper to compile vilt.tex while normalizing the accidental BEL escape character.
+\catcode`\^^G=0
+\def\bstract{\abstract}
+\def\c#1{\ac{#1}}
+\def\cp#1{\acp{#1}}
+\input{vilt.tex}
