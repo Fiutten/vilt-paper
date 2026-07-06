@@ -1,0 +1,81 @@
+name: Patch ViLT header
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: ${{ github.event.head_commit.message != 'Patch ViLT header and acro usage [skip ci]' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch vilt.tex
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path('vilt.tex')
+          s = path.read_text(encoding='utf-8')
+
+          # Keep acro loaded once. The second load appeared after \raggedbottom.
+          s = s.replace('\n\\usepackage{acro}\n\n\\DeclareAcronym{ict}{', '\n\\DeclareAcronym{ict}{', 1)
+
+          # Title: Springer Nature syntax requires optional short title + mandatory full title.
+          short_title = 'ViLT: A Retrieval-Augmented LLM Tutoring Framework for Subject-Specific Learning Support'
+          full_title = 'Design and Exploratory Evaluation of ViLT: A Retrieval-Augmented LLM Tutoring Framework for Subject-Specific Learning Support'
+          s = re.sub(
+              r'\\title\[ViLT: A Retrieval-Augmented LLM Tutoring Framework for Subject-Specific Learning Support\s*(?=\\author)',
+              f'\\\\title[{short_title}]{{{full_title}}}\n\n',
+              s,
+              count=1,
+          )
+
+          # Abstract oriented to Computers and Education: Artificial Intelligence, while still suitable for Education and Information Technologies.
+          new_abstract = r'''\abstract{Recent advances in \ac{ai}, chatbots, and \acp{llm} have created new opportunities for supporting students beyond the classroom. However, many LLM-based educational assistants remain general-purpose tools and are not explicitly grounded in the syllabus, materials, and pedagogical requirements of specific subjects. This paper presents \ac{vilt}, a \ac{rag} framework for deploying subject-specific LLM tutors in higher education. \ac{vilt} enables educators to provide course materials that are processed, indexed, and retrieved to generate answers aligned with each subject. The virtual tutor supports students by explaining concepts, providing examples, and answering subject-related questions, while structured prompts constrain its behavior to the available educational context. The framework also incorporates a feedback module and a learning analytics dashboard that summarizes student interactions through \acp{kpi}, helping educators monitor system usage and identify topics that may require further reinforcement. An exploratory evaluation was conducted in subjects from three universities in Spain and Colombia. The results show the feasibility of deploying \ac{vilt} across heterogeneous higher-education contexts and indicate positive perceptions from students and educators regarding its usefulness, precision, and pedagogical value.}'''
+          s = re.sub(r'\\abstract\{Teaching and learning processes increasingly rely on \\ac\{ict\}.*?pedagogical value\.\}', new_abstract, s, count=1, flags=re.S)
+
+          # Keywords aligned with AI in Education / educational technology journals.
+          s = s.replace(
+              r'\keywords{Virtual Tutoring, Large Language Models, Human-Computer Interaction, Online Education, Concept Reinforcement}',
+              r'\keywords{Artificial Intelligence in Education, Large Language Models, Retrieval-Augmented Generation, Virtual Tutoring, Learning Analytics}'
+          )
+
+          # acro reset command.
+          s = s.replace(r'\glsresetall', r'\acresetall')
+
+          # Compatibility migration from glossaries to acro.
+          mappings = {
+              'ICT': 'ict', 'ViLT': 'vilt', 'AI': 'ai', 'AIEd': 'aied',
+              'ML': 'ml', 'NLP': 'nlp', 'LLM': 'llm', 'RAG': 'rag',
+              'GPT': 'gpt', 'PEFT': 'peft', 'LoRA': 'lora', 'MAS': 'mas',
+              'AOSE': 'aose', 'ABM': 'abm', 'BDI': 'bdi', 'KPI': 'kpi'
+          }
+          for old, new in mappings.items():
+              s = s.replace(f'\\glspl{{{old}}}', f'\\acp{{{new}}}')
+              s = s.replace(f'\\gls{{{old}}}', f'\\ac{{{new}}}')
+
+          test_file = Path('chatgpt_write_test.tmp')
+          if test_file.exists():
+              test_file.unlink()
+
+          path.write_text(s, encoding='utf-8')
+          PY
+
+      - name: Commit patched manuscript
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add vilt.tex
+          git rm -f chatgpt_write_test.tmp || true
+          git commit -m "Patch ViLT header and acro usage [skip ci]"
+          git push
