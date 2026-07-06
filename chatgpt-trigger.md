@@ -1,0 +1,1 @@
+This file was created to trigger the repository workflow after installing the GitHub connector.
