@@ -67,8 +67,6 @@
 \raggedbottom
 %%\unnumbered% uncomment this for unnumbered level heads
 
-\usepackage{acro}
-
 \DeclareAcronym{ict}{
   short = ICT,
   long  = Information and Communication Technologies
@@ -151,8 +149,7 @@
 
 \begin{document}
 
-\title[ViLT: A Retrieval-Augmented LLM Tutoring Framework for Subject-Specific Learning Support
-
+\title[ViLT: A Retrieval-Augmented LLM Tutoring Framework for Subject-Specific Learning Support]{Design and Exploratory Evaluation of ViLT: A Retrieval-Augmented LLM Tutoring Framework for Subject-Specific Learning Support}
 
 \author*[1]{\fnm{Alberto} \sur{Fern\'andez-Isabel}}\email{alberto.fernandez.isabel@urjc.es}
 
@@ -174,12 +171,12 @@
 %% Sample for unstructured abstract %%
 %%==================================%%
 
-%\abstract{Nowadays, the job of teaching has adopted the \gls{ICT} for learning tasks in multiple areas of education. In this context, the most recent advances in \gls{AI} related to chatbots and \glspl{LLM} have been used only as assistants in a question \& answering solution from a global perspective. However, developing novel systems for detailed help with subjects and tutoring students to strengthen the knowledge acquired during class is a key issue. This paper presents \gls{ViLT}. It is a complete framework for tutoring students, collecting information on the syllabus of subjects, and producing a specific virtual expert based on \glspl{LLM}. This expert can explain related concepts, giving examples, procedures, and key details, thanks to the inclusion of a \gls{RAG} mechanism based on LangChain. Well-structured prompts guide these virtual tutors in acting as mentors and being coherent with the topics of the subjects. The functionalities of \gls{ViLT} are completed with a feedback module to evaluate the quality of the responses according to the request made. Educators can consult an integrated visualization dashboard to analyze the evolution of the course through different \glspl{KPI} extracted from the interactions with the virtual tutors. Several experiments have been conducted using subjects at Rey Juan Carlos University and Complutense University of Madrid in Spain, and Sin\'u-El\'ias Bechara Zain\'um University in Colombia. The results are promising, increasing the ability of students to reinforce concepts and easing the monitoring task of educators.}
+%\abstract{Nowadays, the job of teaching has adopted the \ac{ict} for learning tasks in multiple areas of education. In this context, the most recent advances in \ac{ai} related to chatbots and \acp{llm} have been used only as assistants in a question \& answering solution from a global perspective. However, developing novel systems for detailed help with subjects and tutoring students to strengthen the knowledge acquired during class is a key issue. This paper presents \ac{vilt}. It is a complete framework for tutoring students, collecting information on the syllabus of subjects, and producing a specific virtual expert based on \acp{llm}. This expert can explain related concepts, giving examples, procedures, and key details, thanks to the inclusion of a \ac{rag} mechanism based on LangChain. Well-structured prompts guide these virtual tutors in acting as mentors and being coherent with the topics of the subjects. The functionalities of \ac{vilt} are completed with a feedback module to evaluate the quality of the responses according to the request made. Educators can consult an integrated visualization dashboard to analyze the evolution of the course through different \acp{kpi} extracted from the interactions with the virtual tutors. Several experiments have been conducted using subjects at Rey Juan Carlos University and Complutense University of Madrid in Spain, and Sin\'u-El\'ias Bechara Zain\'um University in Colombia. The results are promising, increasing the ability of students to reinforce concepts and easing the monitoring task of educators.}
 
-\abstract{Teaching and learning processes increasingly rely on \ac{ict}, while recent advances in \ac{ai}, chatbots, and \acp{llm} have created new opportunities for personalized academic support. However, many \acp{llm}-based educational assistants remain general-purpose tools and are not explicitly grounded in the syllabus, materials, and pedagogical requirements of specific subjects. This paper presents \ac{vilt}, an integrated framework for deploying subject-specific virtual tutors based on \acp{llm} and \ac{rag}. \ac{vilt} enables educators to provide course materials that are processed and indexed to generate grounded answers aligned with each subject. The virtual tutor explains concepts, provides examples, and answers subject-related questions, while structured prompts constrain its behavior to the available educational context. The framework also incorporates a feedback module and a visualization dashboard that summarizes student interactions through \acp{kpi}, supporting educators in course monitoring and identification of difficult topics. Experiments conducted in subjects from three universities in Spain and Colombia show the feasibility of the framework and indicate positive perceptions from students and educators regarding its usefulness, precision, and pedagogical value.}
+bstract{Recent advances in c{ai}, chatbots, and cp{llm} have created new opportunities for supporting students beyond the classroom. However, many LLM-based educational assistants remain general-purpose tools and are not explicitly grounded in the syllabus, materials, and pedagogical requirements of specific subjects. This paper presents c{vilt}, a c{rag} framework for deploying subject-specific LLM tutors in higher education. c{vilt} enables educators to provide course materials that are processed, indexed, and retrieved to generate answers aligned with each subject. The virtual tutor supports students by explaining concepts, providing examples, and answering subject-related questions, while structured prompts constrain its behavior to the available educational context. The framework also incorporates a feedback module and a learning analytics dashboard that summarizes student interactions through cp{kpi}, helping educators monitor system usage and identify topics that may require further reinforcement. An exploratory evaluation was conducted in subjects from three universities in Spain and Colombia. The results show the feasibility of deploying c{vilt} across heterogeneous higher-education contexts and indicate positive perceptions from students and educators regarding its usefulness, precision, and pedagogical value.}
 
 
-\keywords{Virtual Tutoring, Large Language Models, Human-Computer Interaction, Online Education, Concept Reinforcement}
+\keywords{Artificial Intelligence in Education, Large Language Models, Retrieval-Augmented Generation, Virtual Tutoring, Learning Analytics}
 
 %%\pacs[JEL Classification]{D8, H51}
 
@@ -187,7 +184,7 @@
 
 \maketitle
 
-\glsresetall
+\acresetall
 
 \section{Introduction}
 \label{sec:intro}
@@ -195,17 +192,17 @@ Including and using technology in education is an open topic that evolves while 
 
 On the other hand, groundbreaking educational methodologies have arisen during this period. Among them, e-learning \cite{liu2023towards} and gamification \cite{oliveira2023tailored} are some of the most successful thanks to their ability to produce periods of concentration in students and a certain level of fun while learning.
 
-In the case of \gls{AI}, the most recent approaches based on \glspl{LLM} have provided support to the academic world (mainly universities and research centers). The impact has been similar for the educational community in high and elementary schools, including both educators and students \cite{kasneci2023chatgpt}. The adoption of these systems and their technology has been historically the fastest to be established in the world \cite{makridakis2023large}. This has occurred because \glspl{LLM} include chatbots with an inborn ability to interact at the human level. Moreover, they are excellent in duties like generating new text, rewriting paragraphs, and solving global questions (with a certain level of quality). In this sense, ChatGPT ((which uses different releases of \gls{GPT}) is the most widely known and used model \cite{lund2023chatting}.
+In the case of \ac{ai}, the most recent approaches based on \acp{llm} have provided support to the academic world (mainly universities and research centers). The impact has been similar for the educational community in high and elementary schools, including both educators and students \cite{kasneci2023chatgpt}. The adoption of these systems and their technology has been historically the fastest to be established in the world \cite{makridakis2023large}. This has occurred because \acp{llm} include chatbots with an inborn ability to interact at the human level. Moreover, they are excellent in duties like generating new text, rewriting paragraphs, and solving global questions (with a certain level of quality). In this sense, ChatGPT ((which uses different releases of \ac{gpt}) is the most widely known and used model \cite{lund2023chatting}.
 
-However, these systems have some drawbacks. They have been trained with pieces of information from very different topics and domains. This makes them prone to make mistakes or produce imprecise answers. To alleviate this problem, fine-tuning processes are used to make these systems virtual experts in a specific domain. \gls{PEFT} techniques \cite{he2021towards}, and and more specifically \gls{LoRA} \cite{hu2021lora}, are used here. Nevertheless, fine-tuning techniques are not without problems, as they are very demanding in terms of computational resources, which makes it necessary to use specific machines or infrastructures to achieve an acceptable adaptation of the model. Moreover, \glspl{LLM} usually include some random factors (e.g. ``temperature'') that make them more or less prone to be creative in their answers (e.g. using different text forms), but also to make mistakes or invent information about a specific topic. These situations are called ``hallucinations'' and generate inconsistencies and problems in the provided solutions.
+However, these systems have some drawbacks. They have been trained with pieces of information from very different topics and domains. This makes them prone to make mistakes or produce imprecise answers. To alleviate this problem, fine-tuning processes are used to make these systems virtual experts in a specific domain. \ac{peft} techniques \cite{he2021towards}, and and more specifically \ac{lora} \cite{hu2021lora}, are used here. Nevertheless, fine-tuning techniques are not without problems, as they are very demanding in terms of computational resources, which makes it necessary to use specific machines or infrastructures to achieve an acceptable adaptation of the model. Moreover, \acp{llm} usually include some random factors (e.g. ``temperature'') that make them more or less prone to be creative in their answers (e.g. using different text forms), but also to make mistakes or invent information about a specific topic. These situations are called ``hallucinations'' and generate inconsistencies and problems in the provided solutions.
 
-\gls{RAG} techniques \cite{gao2023retrieval} appear to address some of these issues. They take a user query and first retrieve information from trusted data sources, then provide both the user query and the relevant information to the \gls{LLM}, which uses this knowledge and its training data to create the answer. With this, \gls{RAG} creates more robust systems where the \gls{LLM} returns more precise and deterministic answers according to a topic and largely reduces the hallucination problems, without incurring in the high computational and financial costs associated with continuously training these models.
+\ac{rag} techniques \cite{gao2023retrieval} appear to address some of these issues. They take a user query and first retrieve information from trusted data sources, then provide both the user query and the relevant information to the \ac{llm}, which uses this knowledge and its training data to create the answer. With this, \ac{rag} creates more robust systems where the \ac{llm} returns more precise and deterministic answers according to a topic and largely reduces the hallucination problems, without incurring in the high computational and financial costs associated with continuously training these models.
 
-Taking advantage of these \gls{AI} technologies, this paper presents a novel framework called \gls{ViLT} to improve the quality of the learning process from both the perspective of educators and students. It provides virtual tutors who serve as always-available mentors to address subject-related doubts, similar to how a student would interact with an educator during a tutoring session. These virtual tutors of the system are based on \glspl{LLM} and are managed by intelligent agents that are part of a \gls{MAS} \cite{dorri2018multi}.
+Taking advantage of these \ac{ai} technologies, this paper presents a novel framework called \ac{vilt} to improve the quality of the learning process from both the perspective of educators and students. It provides virtual tutors who serve as always-available mentors to address subject-related doubts, similar to how a student would interact with an educator during a tutoring session. These virtual tutors of the system are based on \acp{llm} and are managed by intelligent agents that are part of a \ac{mas} \cite{dorri2018multi}.
 
-For each specific topic, the virtual tutor adapts using the content provided and reviewed by the educator through \gls{RAG} techniques. This ensures that the chatbot's responses align with the subject's content and requirements.
+For each specific topic, the virtual tutor adapts using the content provided and reviewed by the educator through \ac{rag} techniques. This ensures that the chatbot's responses align with the subject's content and requirements.
 
-In addition, the system has a dashboard that tracks and summarizes all student interactions with the virtual tutor. This dashboard includes \glspl{KPI} related to: (1) usage data, such as how often each student uses the tool and the duration of their sessions, (2) information about the questions asked and the topics where students encounter more difficulties, and (3) the feedback of the students. Thanks to this dashboard, educators can monitor student interactions with \gls{ViLT} at any time and use the information to reinforce the most problematic concepts in the classroom or to schedule tutoring sessions with some students.
+In addition, the system has a dashboard that tracks and summarizes all student interactions with the virtual tutor. This dashboard includes \acp{kpi} related to: (1) usage data, such as how often each student uses the tool and the duration of their sessions, (2) information about the questions asked and the topics where students encounter more difficulties, and (3) the feedback of the students. Thanks to this dashboard, educators can monitor student interactions with \ac{vilt} at any time and use the information to reinforce the most problematic concepts in the classroom or to schedule tutoring sessions with some students.
 
 With these elements, the proposed framework provides provides a new dimension to the development of the course that benefits both students and educators. It improves the quality of the learning process with additional and tailored resources, keeps the educator in control, and can be adapted to the actual context.
 
@@ -216,10 +213,10 @@ The rest of the paper is organized as follows. Section \ref{sec:background} embr
 
 \section{Background}
 \label{sec:background}
-The background of the proposed work lies in the tutoring task, the evolution of \gls{AI} and its inclusion in education in recent years, and how \glspl{LLM} have impacted society in general and the educational field in particular. Notice that these three concepts are the pillars of the proposal, building the \gls{ViLT} as a consequence of their joining.
+The background of the proposed work lies in the tutoring task, the evolution of \ac{ai} and its inclusion in education in recent years, and how \acp{llm} have impacted society in general and the educational field in particular. Notice that these three concepts are the pillars of the proposal, building the \ac{vilt} as a consequence of their joining.
 
 Section \ref{sec:tutoring} addresses the relevant methodologies in education. It details how the tutoring task has evolved from standard techniques until reaching the most advanced systems. 
-Section \ref{sec:ai} introduces typical approaches based on \gls{AI} in education, offering a chronological review that highlights how it has evolved into a key element today. Finally, Section \ref{sec:llm} tackles \glspl{LLM}, a disruptive and novel technology that has evolved to become one of the most useful tools.
+Section \ref{sec:ai} introduces typical approaches based on \ac{ai} in education, offering a chronological review that highlights how it has evolved into a key element today. Finally, Section \ref{sec:llm} tackles \acp{llm}, a disruptive and novel technology that has evolved to become one of the most useful tools.
 
 
 \subsection{The evolution of tutoring}
@@ -230,74 +227,74 @@ The tutoring process can be organized from two perspectives: the communication c
 
 In this context, the role of educators has increasingly been supplemented by computer systems acting as virtual mentors \cite{zhou1999practical}. These systems are capable of engaging in natural language conversations with students \cite{paladines2020systematic} and also understand complex queries \cite{rathore2020intelligent}. However, such approaches often lack specificity and can yield unpredictable outcomes. Therefore, it is key for educators to contribute their expertise to tailor these systems to the particular needs of each subject and, subsequently, verify their effectiveness.
 
-These systems can use \gls{ML} models to produce adaptive learning, detect the weaknesses of the individuals who interact with them, and provide information about specific topics to reinforce their knowledge \cite{katz2021linking}. This is usually based on the automated classification of students according to determined features of interest such as assistance or doubts \cite{vsaric2023student}, which enables the development of student profiles and the identification of specific groups with similar weaknesses \cite{alshaikh2021ai}.
+These systems can use \ac{ml} models to produce adaptive learning, detect the weaknesses of the individuals who interact with them, and provide information about specific topics to reinforce their knowledge \cite{katz2021linking}. This is usually based on the automated classification of students according to determined features of interest such as assistance or doubts \cite{vsaric2023student}, which enables the development of student profiles and the identification of specific groups with similar weaknesses \cite{alshaikh2021ai}.
 
-This paper introduces a system featuring intelligent tutors equipped with subject-specific knowledge, provided and validated  by the respective educators. The system integrates a \gls{MAS} alongside cutting-edge \gls{ML} techniques to support student learning. Thus, it maintains conversations in natural language, understanding specific questions, and providing detailed solutions. Integrating \glspl{LLM} has increased the quality of the dialogue and the versatility of the proposal.
+This paper introduces a system featuring intelligent tutors equipped with subject-specific knowledge, provided and validated  by the respective educators. The system integrates a \ac{mas} alongside cutting-edge \ac{ml} techniques to support student learning. Thus, it maintains conversations in natural language, understanding specific questions, and providing detailed solutions. Integrating \acp{llm} has increased the quality of the dialogue and the versatility of the proposal.
 
 
 \subsection{AI in the education}
 \label{sec:ai}
-\gls{AI} in education also called \gls{AIEd} is a branch inside the education area related to computer science. It is directly influenced by technological advances and the evolution of learning techniques \cite{chen2020artificial}. 
+\ac{ai} in education also called \ac{aied} is a branch inside the education area related to computer science. It is directly influenced by technological advances and the evolution of learning techniques \cite{chen2020artificial}. 
 
-\gls{AIEd} consists of satisfying the needs of educators and experts in education providing intelligent systems. These systems are typically tools or applications specifically designed to assist with teaching tasks alongside educators during class or to offer support to students throughout the learning process. As such, they can be categorized into two perspectives based on their role in education: educator and student-oriented systems \cite{chen2022two}.
+\ac{aied} consists of satisfying the needs of educators and experts in education providing intelligent systems. These systems are typically tools or applications specifically designed to assist with teaching tasks alongside educators during class or to offer support to students throughout the learning process. As such, they can be categorized into two perspectives based on their role in education: educator and student-oriented systems \cite{chen2022two}.
 
 Educator-oriented systems have evolved in the last few years to facilitate the duties of educators. The most typical are related to revitalizing the classes, providing guidelines to educators, and elaborating documents (tests or exercises) according to a topic to learn. Well-known examples of these frameworks are tools such as Kahoot \cite{medina2017kahoot}, ClassDojo \cite{digiacomo2021students}, and Rexams library \cite{grun2009automatic}.
 
 Student-oriented systems usually include specific trainers or problem solvers for the students. They can act as an information provider summarizing the relevant, emulate real environments, or develop games to promote the learning task of individuals through game-based techniques. Well-known examples of information providers are web search engines focused on education or academic tasks such as Google Scholar \cite{jacso2008google}, while intelligent systems are oriented to emulating real conditions (e.g., car driving and flight simulators) \cite{de2013analysis}. Furthermore, e-learning oriented to serious games and gamification are relevant game-based techniques \cite{tolks2024role}.
 
-Alternatively, \gls{AIEd} can also be organized into three perspectives according to the role of the system \cite{ouyang2021artificial}: AI-directed, AI-supported, and AI-empowered. In the first case, intelligent systems represent and direct cognitive learning while learners are the recipients. In the second case, intelligent systems support learning while learners play as collaborators. In the third case, intelligent systems empower learning while learners are responsible for their improvement.
+Alternatively, \ac{aied} can also be organized into three perspectives according to the role of the system \cite{ouyang2021artificial}: AI-directed, AI-supported, and AI-empowered. In the first case, intelligent systems represent and direct cognitive learning while learners are the recipients. In the second case, intelligent systems support learning while learners play as collaborators. In the third case, intelligent systems empower learning while learners are responsible for their improvement.
 
-It is important to highlight the rise of \glspl{LLM}, and especially ChatGPT \cite{kasneci2023chatgpt} nowadays. These systems have revolutionized education, allowing students to produce documents, works, and very different novel content without human intervention. Moreover, from the educator´s perspective, they are useful in developing new subject content, such as summaries and practice exercises for assessments \cite{orenstrakh2023detecting}.
+It is important to highlight the rise of \acp{llm}, and especially ChatGPT \cite{kasneci2023chatgpt} nowadays. These systems have revolutionized education, allowing students to produce documents, works, and very different novel content without human intervention. Moreover, from the educator´s perspective, they are useful in developing new subject content, such as summaries and practice exercises for assessments \cite{orenstrakh2023detecting}.
 
-This paper presents a framework that includes specialized virtual tutors for each subject. It is focused on the perspective of the learners being mainly an AI-empowered system. These tutors are intelligent agents that include \glspl{LLM} adapted to provide specific information.
+This paper presents a framework that includes specialized virtual tutors for each subject. It is focused on the perspective of the learners being mainly an AI-empowered system. These tutors are intelligent agents that include \acp{llm} adapted to provide specific information.
 
 
 \subsection{Large Language Models}
 \label{sec:llm}
-\glspl{LLM} have appeared to revolutionize the \gls{AI} era, radically changing the landscape and the \gls{NLP} techniques \cite{hadi2023large}. They use a large amount of unlabeled textual data to be trained to understand the syntax and semantics of the language.
+\acp{llm} have appeared to revolutionize the \ac{ai} era, radically changing the landscape and the \ac{nlp} techniques \cite{hadi2023large}. They use a large amount of unlabeled textual data to be trained to understand the syntax and semantics of the language.
 
-These systems incorporate a deep learning algorithm to address different \gls{NLP} tasks such as text translation, word prediction, text generation, and conversational agents \cite{zhao2023survey}. Among these tasks, textual annotations (labeling the type of a word according to the sentence) \cite{he2023annollm} and text generation (from an initial sentence or a specific topic) are those where the improvement has been highly significant \cite{min2023recent}.
+These systems incorporate a deep learning algorithm to address different \ac{nlp} tasks such as text translation, word prediction, text generation, and conversational agents \cite{zhao2023survey}. Among these tasks, textual annotations (labeling the type of a word according to the sentence) \cite{he2023annollm} and text generation (from an initial sentence or a specific topic) are those where the improvement has been highly significant \cite{min2023recent}.
 
 The deep learning algorithm consists of a specific type of neural network called transformers that use attention methods \cite{niu2021review}. Transformers are built through a set of elements: input embeddings, positional encoding modules, encoders, output embeddings, decoders, linear layers, and softmax layers \cite{vaswani2017attention}.
 
-Well-known examples of these systems are \gls{GPT} \cite{floridi2020gpt} (from OpenAI) and PaLM \cite{anil2023palm} (from Google). Both are closed-source models that cannot easily adapt to a new context. However, new \glspl{LLM} have recently been developed as open source systems. Well-known instances of them are: Llama \cite{lu2023llama}, Gemma 2 \cite{team2024gemma}, Qwen 2.5 \cite{hui2024qwen2}, and Mistral 2 \cite{jiang2023mistral}.
+Well-known examples of these systems are \ac{gpt} \cite{floridi2020gpt} (from OpenAI) and PaLM \cite{anil2023palm} (from Google). Both are closed-source models that cannot easily adapt to a new context. However, new \acp{llm} have recently been developed as open source systems. Well-known instances of them are: Llama \cite{lu2023llama}, Gemma 2 \cite{team2024gemma}, Qwen 2.5 \cite{hui2024qwen2}, and Mistral 2 \cite{jiang2023mistral}.
 
-Unlike previously developed language models, \glspl{LLM} can achieve high prediction quality in few-shot and zero-shot scenarios without aggregating new extensive training data or model fine-tuning \cite{kojima2022large}. However, in some cases, the knowledge they can provide is too general \cite{liu2023summary}. In such a scenario, fine-tuning operations can produce accurate results in specialized domains, but at the cost of high computational costs. This is the case in fields like health care, where terminology and definitions are specific \cite{singhal2023large}, or in code generation across multiple programming languages, where general templates or detailed functions are well established \cite{wang2023codet5}.
+Unlike previously developed language models, \acp{llm} can achieve high prediction quality in few-shot and zero-shot scenarios without aggregating new extensive training data or model fine-tuning \cite{kojima2022large}. However, in some cases, the knowledge they can provide is too general \cite{liu2023summary}. In such a scenario, fine-tuning operations can produce accurate results in specialized domains, but at the cost of high computational costs. This is the case in fields like health care, where terminology and definitions are specific \cite{singhal2023large}, or in code generation across multiple programming languages, where general templates or detailed functions are well established \cite{wang2023codet5}.
 
-Alternatively, some methods have emerged to reduce the effort of adapting \glspl{LLM} to specific domains and tasks. \gls{PEFT} techniques \cite{he2021towards} can fine-tune \glspl{LLM} by updating only a small set of parameters. On the other hand, \gls{RAG} \cite{gao2023retrieval} techniques can adapt \glspl{LLM} to avoid the update process by providing new knowledge to the model by inserting embeddings directly into the prompt.
+Alternatively, some methods have emerged to reduce the effort of adapting \acp{llm} to specific domains and tasks. \ac{peft} techniques \cite{he2021towards} can fine-tune \acp{llm} by updating only a small set of parameters. On the other hand, \ac{rag} \cite{gao2023retrieval} techniques can adapt \acp{llm} to avoid the update process by providing new knowledge to the model by inserting embeddings directly into the prompt.
 
-\gls{ViLT} is a system that works with open source \glspl{LLM} and with \gls{GPT} releases. \glspl{LLM} can be automatically adapted to the specific domain of the subject. This adaptation has been achieved using \gls{RAG} techniques to include new knowledge to cover the syllabi of subjects, avoiding excessive consumption of resources produced by a fine-tuning process. This design provides high flexibility, easing the tutor's adaptation to the needs of the course.
+\ac{vilt} is a system that works with open source \acp{llm} and with \ac{gpt} releases. \acp{llm} can be automatically adapted to the specific domain of the subject. This adaptation has been achieved using \ac{rag} techniques to include new knowledge to cover the syllabi of subjects, avoiding excessive consumption of resources produced by a fine-tuning process. This design provides high flexibility, easing the tutor's adaptation to the needs of the course.
 
 
 \section{Proposed Framework}
 \label{sec:proposal}
-The proposed framework called \gls{ViLT} focuses on virtual tutoring and monitoring of student tasks, effectively addressing the needs of both students and educators throughout the course. These tutoring activities are managed by virtual tutors. Each tutor is equipped with a specialized \gls{LLM} customized to the syllabus requirements of the specific subject (see Fig. \ref{fig:chatbot}).
+The proposed framework called \ac{vilt} focuses on virtual tutoring and monitoring of student tasks, effectively addressing the needs of both students and educators throughout the course. These tutoring activities are managed by virtual tutors. Each tutor is equipped with a specialized \ac{llm} customized to the syllabus requirements of the specific subject (see Fig. \ref{fig:chatbot}).
 
 \begin{figure}[t!]
 	\centering
 	\includegraphics[scale=0.24]{figs/chatbot.png}
-	\caption{Excerpt of the \gls{ViLT} chatbot in Spanish language.}
+	\caption{Excerpt of the \ac{vilt} chatbot in Spanish language.}
 	\label{fig:chatbot}
 \end{figure}
 
-A \gls{MAS} controls and distributes the main tasks of \gls{ViLT}. These agents play the roles of general manager, chatbot manager, and embedding manager. 
+A \ac{mas} controls and distributes the main tasks of \ac{vilt}. These agents play the roles of general manager, chatbot manager, and embedding manager. 
 
 The system has two main workflows: the main workflow corresponds to the interaction with the different users in real-time, and the updating information workflow to the tasks in batch to produce new embedded releases based on the syllabus of the subjects.
 
-The roles of users included in \gls{ViLT} are: administrator (in charge of adding information about subjects and degrees), educator (who submits material related to the syllabus of subjects and visualize individual and collective statistics about the development of the course), and students (that interact with the chatbot in a request-answer cycle and provide feedback about the quality of the proposal).
+The roles of users included in \ac{vilt} are: administrator (in charge of adding information about subjects and degrees), educator (who submits material related to the syllabus of subjects and visualize individual and collective statistics about the development of the course), and students (that interact with the chatbot in a request-answer cycle and provide feedback about the quality of the proposal).
 
 \subsection{Architecture}
 \label{sec:architecture}
-The \gls{ViLT} architecture is based on completely distributed and isolated platforms for each target subject. These platforms are dynamic (i.e., the system creates or destroys them as needed) and have six modules and three individual databases (see Fig. \ref{fig:vilt}). They connect via an API to the \gls{LLM} server that hosts the corresponding \gls{LLM} (represented in the figure with a database icon too).
+The \ac{vilt} architecture is based on completely distributed and isolated platforms for each target subject. These platforms are dynamic (i.e., the system creates or destroys them as needed) and have six modules and three individual databases (see Fig. \ref{fig:vilt}). They connect via an API to the \ac{llm} server that hosts the corresponding \ac{llm} (represented in the figure with a database icon too).
 
 \begin{figure}[t!]
 	\centering
 	\includegraphics[scale=0.5]{figs/vilt.png}
-	\caption{Overview of the \gls{ViLT} architecture.}
+	\caption{Overview of the \ac{vilt} architecture.}
 	\label{fig:vilt}
 \end{figure}
 
-The modules are: the \emph{LLM manager}, the \emph{Chatbot manager}, the \emph{Information gatherer}, the \emph{Knowledge learner}, the \emph{User´s manager}, and the \emph{Feedback manager}. The core of the system comprises the first four modules. They are managed by a \gls{MAS}, where intelligent autonomous agents based on the \gls{AOSE} architecture \cite{abdalla2021agent} organize and distribute actions and decisions.
+The modules are: the \emph{LLM manager}, the \emph{Chatbot manager}, the \emph{Information gatherer}, the \emph{Knowledge learner}, the \emph{User´s manager}, and the \emph{Feedback manager}. The core of the system comprises the first four modules. They are managed by a \ac{mas}, where intelligent autonomous agents based on the \ac{aose} architecture \cite{abdalla2021agent} organize and distribute actions and decisions.
 
 On the other hand, the databases are: \emph{Embeddings} (i.e., a chroma database with the vectors of the syllabus for the subject \cite{kukreja2024performance}), \emph{Feedback knowledge} (i.e., knowledge obtained from the opinion of students who use the system in the subject) and \emph{Users information} (i.e., profile details of students and educators who are part of the subject). Notice that a visualization module completes the system in the front-end layer.
 
@@ -308,7 +305,7 @@ On the other hand, the databases are: \emph{Embeddings} (i.e., a chroma database
 	\label{fig:llm}
 \end{figure}
 
-Regarding the components of the modules, the \emph{LLM manager} module loads the corresponding \gls{LLM} and integrates the \gls{RAG} embeddings into it. Then, it manages the requests and answers between users and the chatbot. This module comprises two components: the \emph{LLM requester} component and the \emph{Information organizer} component. The first component addresses the actual communication with the user, while the second component establishes the structure of the environment (configuration of the parameters of the \gls{LLM} and the \gls{RAG} embeddings integration).
+Regarding the components of the modules, the \emph{LLM manager} module loads the corresponding \ac{llm} and integrates the \ac{rag} embeddings into it. Then, it manages the requests and answers between users and the chatbot. This module comprises two components: the \emph{LLM requester} component and the \emph{Information organizer} component. The first component addresses the actual communication with the user, while the second component establishes the structure of the environment (configuration of the parameters of the \ac{llm} and the \ac{rag} embeddings integration).
 
 \begin{figure}[t!]
 	\centering
@@ -317,7 +314,7 @@ Regarding the components of the modules, the \emph{LLM manager} module loads the
 	\label{fig:cmm}
 \end{figure}
 
-The \emph{Chatbot manager} module presents the most relevant features of the system, acting as a bridge between the visual interface and the \gls{LLM}. It comprises three components: \emph{Login processor}, the \emph{Request processor}, and the \emph{Response generator}. The first only captures the login information to provide it to the \emph{User manager} module. The other ones generate the internal structure to establish communication between the chatbot and the users, produce the corresponding prompt, render the text to the specific format according to the used language, and correct possible typos.
+The \emph{Chatbot manager} module presents the most relevant features of the system, acting as a bridge between the visual interface and the \ac{llm}. It comprises three components: \emph{Login processor}, the \emph{Request processor}, and the \emph{Response generator}. The first only captures the login information to provide it to the \emph{User manager} module. The other ones generate the internal structure to establish communication between the chatbot and the users, produce the corresponding prompt, render the text to the specific format according to the used language, and correct possible typos.
 
 \begin{figure}[t!]
 	\centering
@@ -326,7 +323,7 @@ The \emph{Chatbot manager} module presents the most relevant features of the sys
 	\label{fig:klm}
 \end{figure}
 
-The \emph{Knowledge learner} module is related to the learning flow of the system (i.e., the generation of the embeddings used for the RAG process), and the main work of the chatbot (i.e., the integration of the RAG using the embeddings and the \gls{LLM}). It comprises three components: the \emph{Text processor} component, the \emph{Embedding generator} component, and the \emph{Knowledge gatherer} component. The first component gathers information from the syllabus provided by educators extracting the textual content. The syllabus can have different file formats (e.g., Excel, Word, or PDF). The second component produces embeddings in a specific format (fast embeddings stored in a chroma database), having a maximum length value of $512$, and a similarity threshold value of $0.1$ with $k=20$. The third component collects and organizes the embeddings used by the \emph{LLM manager} module.
+The \emph{Knowledge learner} module is related to the learning flow of the system (i.e., the generation of the embeddings used for the RAG process), and the main work of the chatbot (i.e., the integration of the RAG using the embeddings and the \ac{llm}). It comprises three components: the \emph{Text processor} component, the \emph{Embedding generator} component, and the \emph{Knowledge gatherer} component. The first component gathers information from the syllabus provided by educators extracting the textual content. The syllabus can have different file formats (e.g., Excel, Word, or PDF). The second component produces embeddings in a specific format (fast embeddings stored in a chroma database), having a maximum length value of $512$, and a similarity threshold value of $0.1$ with $k=20$. The third component collects and organizes the embeddings used by the \emph{LLM manager} module.
 
 \begin{figure}[t!]
 	\centering
@@ -365,18 +362,18 @@ The \emph{Feedback manager} module gathers the students' opinions about the syst
 \begin{figure}[t!]
 	\centering
 	\includegraphics[scale=0.09]{figs/evaluation1.png}
-	\caption{Global \glspl{KPI} provided by the \gls{ViLT} dashboard.}
+	\caption{Global \acp{kpi} provided by the \ac{vilt} dashboard.}
 	\label{fig:eval1}
 \end{figure}
 
 \begin{figure}[t!]
 	\centering
 	\includegraphics[scale=0.27]{figs/evaluation2.png}
-	\caption{Filterable \glspl{KPI} provided by the \gls{ViLT} dashboard (anonymous email addresses).}
+	\caption{Filterable \acp{kpi} provided by the \ac{vilt} dashboard (anonymous email addresses).}
 	\label{fig:eval2}
 \end{figure}
 
-The information collected regarding the feedback obtained by the tool consists of three perspectives that evaluate the system: the precision and the utility of responses, and the ability to make students learn (see Fig. \ref{fig:feedback}). In addition, the system collects \glspl{KPI} from students, such as the number of dialogues, average time per conversation with the chatbot (individually and collectively), and the most relevant keywords. This information is shown to educators through a dashboard, allowing educators to understand the evolution of students and to highlight specific needs. These \glspl{KPI} are grouped into two categories: global \glspl{KPI} (i.e., all the students of the subject) and filterable \glspl{KPI} (some students or individually). Figure \ref{fig:eval1} and Figure \ref{fig:eval2} illustrate excerpts of the dashboard and the different \glspl{KPI}.
+The information collected regarding the feedback obtained by the tool consists of three perspectives that evaluate the system: the precision and the utility of responses, and the ability to make students learn (see Fig. \ref{fig:feedback}). In addition, the system collects \acp{kpi} from students, such as the number of dialogues, average time per conversation with the chatbot (individually and collectively), and the most relevant keywords. This information is shown to educators through a dashboard, allowing educators to understand the evolution of students and to highlight specific needs. These \acp{kpi} are grouped into two categories: global \acp{kpi} (i.e., all the students of the subject) and filterable \acp{kpi} (some students or individually). Figure \ref{fig:eval1} and Figure \ref{fig:eval2} illustrate excerpts of the dashboard and the different \acp{kpi}.
 
 \subsection{Multi-agent system}
 \label{sec:mas}
@@ -384,36 +381,36 @@ The information collected regarding the feedback obtained by the tool consists o
 \begin{figure}[t!]
 	\centering
 	\includegraphics[scale=0.6]{figs/agentstable.png}
-	\caption{Main concepts of INGENIAS for developing the \gls{MAS}.}
+	\caption{Main concepts of INGENIAS for developing the \ac{mas}.}
 	\label{fig:agents}
 \end{figure}
 
-This section details the \gls{MAS} that implements the most relevant tasks of the \gls{ViLT} framework (the four main modules). The design of the \gls{MAS} follows INGENIAS \cite{gomez2010model}, a well-known \gls{ABM} methodology \cite{salmon2022agent} that includes \gls{AOSE}. In this sense, the proposal considers the \gls{BDI} model \cite{archibald2024quantitative}, where each agent has a mental state, believes, and plans to satisfy the main goal through specific tasks (see Fig. \ref{fig:agents}). The \gls{MAS} implementation has been addressed using SPADE \cite{palanca2022flexible}.
+This section details the \ac{mas} that implements the most relevant tasks of the \ac{vilt} framework (the four main modules). The design of the \ac{mas} follows INGENIAS \cite{gomez2010model}, a well-known \ac{abm} methodology \cite{salmon2022agent} that includes \ac{aose}. In this sense, the proposal considers the \ac{bdi} model \cite{archibald2024quantitative}, where each agent has a mental state, believes, and plans to satisfy the main goal through specific tasks (see Fig. \ref{fig:agents}). The \ac{mas} implementation has been addressed using SPADE \cite{palanca2022flexible}.
 
 \begin{figure}[t!]
 	\centering
 	\includegraphics[scale=0.42]{figs/viltagents.png}
-	\caption{Model of entities involved in the \gls{MAS}.}
+	\caption{Model of entities involved in the \ac{mas}.}
 	\label{fig:viltagents}
 \end{figure}
 
-Agents play three roles in managing the interactions between chatbots, users and the textual content gathered from the syllabus for each subject. The global manager for a subject is \emph{ViLT Manager Agent}, the chatbot responsible is \emph{Chatbot Manager Agent}, and the agent responsible for producing the embeddings for the \gls{RAG} system is \emph{ Embeddings Manager Agent} (see Fig. \ref{fig:viltagents}).
+Agents play three roles in managing the interactions between chatbots, users and the textual content gathered from the syllabus for each subject. The global manager for a subject is \emph{ViLT Manager Agent}, the chatbot responsible is \emph{Chatbot Manager Agent}, and the agent responsible for producing the embeddings for the \ac{rag} system is \emph{ Embeddings Manager Agent} (see Fig. \ref{fig:viltagents}).
 
-Regarding the goals, the \emph{ViLT Manager Agent} has \emph{ViLT managed} as the main goal, while the \emph{Chatbot Manager Agent} must satisfy the \emph{Chatbot managed} main goal. In the case of \emph{Embedding manager agent}, the main goal is \emph{Embeddings generated}. These goals include the actions for all the subjects addressed by the \gls{ViLT} framework.
+Regarding the goals, the \emph{ViLT Manager Agent} has \emph{ViLT managed} as the main goal, while the \emph{Chatbot Manager Agent} must satisfy the \emph{Chatbot managed} main goal. In the case of \emph{Embedding manager agent}, the main goal is \emph{Embeddings generated}. These goals include the actions for all the subjects addressed by the \ac{vilt} framework.
 
 \begin{figure}[t!]
 	\centering
 	\includegraphics[scale=0.45]{figs/viltgoals.png}
-	\caption{Hierarchical structure of goals in the \gls{MAS}.}
+	\caption{Hierarchical structure of goals in the \ac{mas}.}
 	\label{fig:goals}
 \end{figure}
 
-These goals are decomposed into others with simpler and more specific actions to achieve (see Fig. \ref{fig:goals}). The satisfaction of these child goals produces the satisfaction of the goal immediately higher in the hierarchical level. Thus, the \emph{ViLT managed} goal is decomposed into the \emph{Chatbot managed} and \emph{Embeddings generated} goals. In this case, it is only relevant that one of these goals is satisfied to satisfy the higher goal (i.e., the main goal of \gls{MAS}). These intermediate goals are also decomposed. The \emph{Chatbot managed} is composed of three goals that all need to be satisfied: \emph{Chatbot deleted}, \emph{Conversation processed}, and \emph{Chatbot created}. These goals control the lifecycle of a chatbot for each subject. Moreover, the \emph{Conversation processed} goal is decomposed into the goals that manage the conversation: \emph{LLM text processed} and \emph{Client text processed}. In the same way, the \emph{Chatbot created} is decomposed into \emph{Embeddings loaded} and \emph{Prompt loaded} goals, which control the correct loading of the necessary features to start the conversation with the chatbots of \gls{ViLT}. On the other hand, the \emph{Embeddings generated} goal is decomposed into three goals that must be satisfied: \emph{Subject selected}, \emph{New information processed}, and \emph{Old information deleted}. These goals tackle the generation of the embeddings, processing new information to include, and deleting ancient releases of embeddings.
+These goals are decomposed into others with simpler and more specific actions to achieve (see Fig. \ref{fig:goals}). The satisfaction of these child goals produces the satisfaction of the goal immediately higher in the hierarchical level. Thus, the \emph{ViLT managed} goal is decomposed into the \emph{Chatbot managed} and \emph{Embeddings generated} goals. In this case, it is only relevant that one of these goals is satisfied to satisfy the higher goal (i.e., the main goal of \ac{mas}). These intermediate goals are also decomposed. The \emph{Chatbot managed} is composed of three goals that all need to be satisfied: \emph{Chatbot deleted}, \emph{Conversation processed}, and \emph{Chatbot created}. These goals control the lifecycle of a chatbot for each subject. Moreover, the \emph{Conversation processed} goal is decomposed into the goals that manage the conversation: \emph{LLM text processed} and \emph{Client text processed}. In the same way, the \emph{Chatbot created} is decomposed into \emph{Embeddings loaded} and \emph{Prompt loaded} goals, which control the correct loading of the necessary features to start the conversation with the chatbots of \ac{vilt}. On the other hand, the \emph{Embeddings generated} goal is decomposed into three goals that must be satisfied: \emph{Subject selected}, \emph{New information processed}, and \emph{Old information deleted}. These goals tackle the generation of the embeddings, processing new information to include, and deleting ancient releases of embeddings.
 
 
 \subsection{Workflow}
 \label{sec:workflow}
-The \gls{ViLT} framework has two main workflows: the main user workflow and the embeddings generation workflow. The first is interactive and includes all the tasks the system achieves (see Fig. \ref {fig:workflow}). The second supports these tasks, covering the generation or updating process of the embeddings for each subject, and it occurs automatically in batch.
+The \ac{vilt} framework has two main workflows: the main user workflow and the embeddings generation workflow. The first is interactive and includes all the tasks the system achieves (see Fig. \ref {fig:workflow}). The second supports these tasks, covering the generation or updating process of the embeddings for each subject, and it occurs automatically in batch.
 
 The user workflow starts with a login, where the role of the users (admin, educator, or student) is filtered. If the user is a student, the tool allows only using the chatbot (requests and answers). Then, when the students do not have more requests, the feedback about the session is retrieved, and they can log out. 
 
@@ -424,30 +421,30 @@ Finally, the system provides different management operations if the user has the
 \begin{figure}[t!]
 	\centering
 	\includegraphics[scale=0.42]{figs/workflow.png}
-	\caption{The user main workflow of the \gls{ViLT} framework.}
+	\caption{The user main workflow of the \ac{vilt} framework.}
 	\label{fig:workflow}
 \end{figure}
 
 
 \section{Experiments}
 \label{sec:experiments}
-The \gls{ViLT} framework has been developed to be launched on virtual platforms of universities. Before reaching this stage, several experiments were carried out to demonstrate the system's feasibility. The selected institutions were Rey Juan Carlos University and Complutense University of Madrid in Spain, along with Sin\'u-El\'ias Bechara Zain\'um University in Colombia. This selection was based on their existing collaboration agreements and the use of equivalent languages. Moreover, their computer science programs include similar subjects, facilitating comparative analysis. The ethics committee of Rey Juan Carlos University approved the \gls{ViLT} project and the corresponding experiments. 
+The \ac{vilt} framework has been developed to be launched on virtual platforms of universities. Before reaching this stage, several experiments were carried out to demonstrate the system's feasibility. The selected institutions were Rey Juan Carlos University and Complutense University of Madrid in Spain, along with Sin\'u-El\'ias Bechara Zain\'um University in Colombia. This selection was based on their existing collaboration agreements and the use of equivalent languages. Moreover, their computer science programs include similar subjects, facilitating comparative analysis. The ethics committee of Rey Juan Carlos University approved the \ac{vilt} project and the corresponding experiments. 
 
-These experiments are organized into four case studies conducted between June $2024$ and December $2024$. The first tackles the loading stage of the corresponding educators, students, and syllabi for the subjects. The second uses the syllabus of the subjects and loads different \glspl{LLM} to evaluate the best option between these models to interact with students. Thus, educators worked with the \glspl{LLM} using a set of requests to analyze the chatbots' responses. The third experiment addresses the quality and usability of the chatbot using the feedback provided by students. Finally, the fourth presents the dashboard features to achieve a global analysis of the subjects to detect weaknesses (individually or collectively) and similar patterns between subjects.
+These experiments are organized into four case studies conducted between June $2024$ and December $2024$. The first tackles the loading stage of the corresponding educators, students, and syllabi for the subjects. The second uses the syllabus of the subjects and loads different \acp{llm} to evaluate the best option between these models to interact with students. Thus, educators worked with the \acp{llm} using a set of requests to analyze the chatbots' responses. The third experiment addresses the quality and usability of the chatbot using the feedback provided by students. Finally, the fourth presents the dashboard features to achieve a global analysis of the subjects to detect weaknesses (individually or collectively) and similar patterns between subjects.
 
 \subsection{System set-up and information loading stage}
 \label{sec:setup}
-In this first experiment, some subjects have been selected to be included in the \gls{ViLT} framework. Then, educators and students were registered as users with the corresponding roles. Later, the educators loaded the documents, which are part of the syllabus and study guide of the subjects. These documents included all course material, covering topics, the evaluation process, and the educator profile in PDF and Word formats. After that, the system automatically produced the embeddings for each syllabus using the LangChain features \cite{auffarth2023generative}.
+In this first experiment, some subjects have been selected to be included in the \ac{vilt} framework. Then, educators and students were registered as users with the corresponding roles. Later, the educators loaded the documents, which are part of the syllabus and study guide of the subjects. These documents included all course material, covering topics, the evaluation process, and the educator profile in PDF and Word formats. After that, the system automatically produced the embeddings for each syllabus using the LangChain features \cite{auffarth2023generative}.
 
 Regarding the subjects, those selected from the Rey Juan Carlos University were \emph{Statistical Inference} in the Degree of Data Science and Engineering ($34$ students), \emph{Advanced Architectures of Computing} in the Degree of Computer Science ($15$ students), and \emph{Data Mining} in the Degree of Mathematics ($4$ students). Furthermore, the subject selected from the Complutense University of Madrid was \emph{Artificial Intelligence} in the Double Degree of Mathematics and Computer Science ($31$ students). Lastly, the subjects selected from the Sin\'u-El\'ias Bechara Zain\'um University were \emph{Probability and Statistics} ($23$ students), and \emph{Applied Computation} ($18$ students) in the Degree of System Engineering. In this way, $125$ students participated in the experiments. Notice the heterogeneity in the number of students, having subjects with several students and others with few from different levels.
 
-Finally, the admins confirmed the correct configuration of the system, being ready to interact with educators and students in real cases. \gls{ViLT} used the API of \gls{GPT} 3.5 turbo as \gls{LLM} for the chatbot configuration by default. This decision is detailed in the next experiment.
+Finally, the admins confirmed the correct configuration of the system, being ready to interact with educators and students in real cases. \ac{vilt} used the API of \ac{gpt} 3.5 turbo as \ac{llm} for the chatbot configuration by default. This decision is detailed in the next experiment.
 
 \subsection{Selection of the chatbot model}
 \label{sec:selection}
-For this experiment, five different \glspl{LLM} have been tested by $6$ educators from the subjects previously indicated. These models are: \gls{GPT} $4$, \gls{GPT} $3.5$ turbo, Llama $3.1$, Gemma $2$, and Qwen $2.5$. The \gls{GPT} models used the OpenAI API \cite{kublik2023gpt}, while open source models were orchestrated through an Ollama server \cite{astekin2024comparative}. Parameters such as temperature have been configured to avoid hallucinations as much as possible.
+For this experiment, five different \acp{llm} have been tested by $6$ educators from the subjects previously indicated. These models are: \ac{gpt} $4$, \ac{gpt} $3.5$ turbo, Llama $3.1$, Gemma $2$, and Qwen $2.5$. The \ac{gpt} models used the OpenAI API \cite{kublik2023gpt}, while open source models were orchestrated through an Ollama server \cite{astekin2024comparative}. Parameters such as temperature have been configured to avoid hallucinations as much as possible.
 
-Regarding the prompts, two equivalent prompts were built following the preferences of each type of participant model and how they understand the input orders. Thus, one of the prompts was designed to be better understood by the \gls{GPT} models, while the other was configured to focus on the Ollama open source models. Next, both prompts are shown.
+Regarding the prompts, two equivalent prompts were built following the preferences of each type of participant model and how they understand the input orders. Thus, one of the prompts was designed to be better understood by the \ac{gpt} models, while the other was configured to focus on the Ollama open source models. Next, both prompts are shown.
 
 \begin{tcolorbox}[colback=White, title=Prompt oriented to GPT models]
 	\begin{verbatim}
@@ -498,11 +495,11 @@ Regarding the prompts, two equivalent prompts were built following the preferenc
 
 The performance of the models is estimated according to the scores provided by the educators in $4$ different dimensions: timeline (i.e., questions about the temporal organization of the subject, e.g., \emph{what is the main topic in the tenth week of the subject?}), evaluation (i.e., how the subject is evaluated following the study guide instructions, e.g., \emph{what are the most relevant aspects of the subject?}), content (i.e., concepts, theory, and examples related to the subject, e.g., \emph{could you accompany the explanation with source code?}), and trap (i.e., questions beyond the scope of the subject, e.g., \emph{what is an elephant?}).
 
-Each dimension is evaluated in a range [$1$, $5$] (providing only integer numbers) where $1$ indicates a bad opinion and $5$ indicates an excellent opinion in the dimension. These values are obtained following a set of guided requests made to \glspl{LLM}, considering key questions about the concepts of the subject and the study guide, and specific examples reflected in the source code or equations included in the syllabi (see Table \ref{tab:evaluations}).
+Each dimension is evaluated in a range [$1$, $5$] (providing only integer numbers) where $1$ indicates a bad opinion and $5$ indicates an excellent opinion in the dimension. These values are obtained following a set of guided requests made to \acp{llm}, considering key questions about the concepts of the subject and the study guide, and specific examples reflected in the source code or equations included in the syllabi (see Table \ref{tab:evaluations}).
 
-The results clearly illustrated that open source \glspl{LLM} performed worse when they had to provide the correct answers. Among them, Qwen $2.5$ stands out for the amount of information it provides beyond the scope of the subject. Gemma $2$ gets a better performance but the behavior is similar, presenting some hallucinations in the answers. Llama $3.1$ improves the results but its performance is far from both \gls{GPT} models.
+The results clearly illustrated that open source \acp{llm} performed worse when they had to provide the correct answers. Among them, Qwen $2.5$ stands out for the amount of information it provides beyond the scope of the subject. Gemma $2$ gets a better performance but the behavior is similar, presenting some hallucinations in the answers. Llama $3.1$ improves the results but its performance is far from both \ac{gpt} models.
 
-In the case of \gls{GPT} models, their performance is similar, with \gls{GPT} $4$ being slightly better than \gls{GPT} $3.5$ turbo. This result is acceptable due to the nature of the models, being \gls{GPT} $4$ a more modern and larger version. However, the decision was to use \gls{GPT} $3.5$ turbo because the performance difference between both releases is low and the economical cost of deployment on a virtual platform for students is lower.
+In the case of \ac{gpt} models, their performance is similar, with \ac{gpt} $4$ being slightly better than \ac{gpt} $3.5$ turbo. This result is acceptable due to the nature of the models, being \ac{gpt} $4$ a more modern and larger version. However, the decision was to use \ac{gpt} $3.5$ turbo because the performance difference between both releases is low and the economical cost of deployment on a virtual platform for students is lower.
 
 \begin{table}[t!]
 	\centering
@@ -521,13 +518,13 @@ In the case of \gls{GPT} models, their performance is similar, with \gls{GPT} $4
 
 \subsection{Feedback analysis from students}
 \label{sec:feedback}
-This experiment evaluates the quality of the system from the student's perspective. The evaluation is based on the feedback provided by students after completing a tutoring session with the chatbot for a specific subject. Thus, in this scenario, \gls{ViLT} is examined through the lens of the student experience.
+This experiment evaluates the quality of the system from the student's perspective. The evaluation is based on the feedback provided by students after completing a tutoring session with the chatbot for a specific subject. Thus, in this scenario, \ac{vilt} is examined through the lens of the student experience.
 
 The feedback value (integers in a range [0, 10]) was obtained considering the three dimensions provided by the system (see Section \ref{sec:architecture} for details). In this case, the first dimension evaluates whether the tutoring process was productive for the students (i.e., if students solved their open issues related to the subject). The second dimension addressed the precision of the answers provided by the chatbot, determining if the answers were correct and accurate according to the request made. The third dimension considered the quality of the chatbot, determining if the explanations were detailed enough and the examples were well explained.
 
 The number of participants in each subject was: $7$ students from \emph{Advanced Architectures of Computing}, $14$ from \emph{Statistical Inference}, $4$ from \emph{Data Mining}, $13$ from \emph{Artificial Intelligence}, $16$ from \emph{Probability and Statistics} and $18$ from \emph{Applied Computation}. Notice that the participants were those students who followed the subjects, regularly attended classes, and showed interest in learning the concepts presented in the syllabus. In this regard, it is worth noting that Colombian students were more involved in the system and also had higher attendance than in Spanish universities.
 
-A summary based on the resulting feedback provided by the students is depicted in Table \ref{tab:feedback}. In terms of the global median, \gls{ViLT} obtained marks above $8$ for utility and learning quality, and above $7$ for precision. It is relevant to indicate that in $16$ of $18$ cases, the higher mark achieved is the maximum mark (10). However, some minimum marks of $2$, $4$, and $5$ were obtained, indicating that the system was not completely satisfactory. Therefore, there is still room for improvement, mainly in the precision of the answers. Despite the low number of students in some subjects, the feedback received is similar, being the most criticized \emph{Artificial Intelligence} (from Spain) and \emph{Probability and Statistics} (from Colombia).
+A summary based on the resulting feedback provided by the students is depicted in Table \ref{tab:feedback}. In terms of the global median, \ac{vilt} obtained marks above $8$ for utility and learning quality, and above $7$ for precision. It is relevant to indicate that in $16$ of $18$ cases, the higher mark achieved is the maximum mark (10). However, some minimum marks of $2$, $4$, and $5$ were obtained, indicating that the system was not completely satisfactory. Therefore, there is still room for improvement, mainly in the precision of the answers. Despite the low number of students in some subjects, the feedback received is similar, being the most criticized \emph{Artificial Intelligence} (from Spain) and \emph{Probability and Statistics} (from Colombia).
 
 Therefore, it could be concluded that the system delivers consistent results, with student heterogeneity having minimal impact on the evaluation process.  However, for future assessments, it would be valuable to conduct this test with students from disciplines outside of computer science to enable broader comparisons.
 
@@ -550,7 +547,7 @@ Therefore, it could be concluded that the system delivers consistent results, wi
 
 \subsection{Visual analysis of students performance}
 \label{sec:visual}
-This experiment evaluates the system as a relevant information provider concerning subjects. Therefore, in this case, \gls{ViLT} is analyzed from the perspective of educators. The results reflected in the dashboard were analyzed using three main \glspl{KPI}: relation about the number of logins per student in the subjects, time spent in the tool per student (do not consider those who did not use the tool), and the most relevant keywords (three most common words used in the requests). Thus, the first two consider the interest of the students in the subject and the tutoring need (use of the tool), while the third evaluates the possible problems related to the syllabus.
+This experiment evaluates the system as a relevant information provider concerning subjects. Therefore, in this case, \ac{vilt} is analyzed from the perspective of educators. The results reflected in the dashboard were analyzed using three main \acp{kpi}: relation about the number of logins per student in the subjects, time spent in the tool per student (do not consider those who did not use the tool), and the most relevant keywords (three most common words used in the requests). Thus, the first two consider the interest of the students in the subject and the tutoring need (use of the tool), while the third evaluates the possible problems related to the syllabus.
 
 \begin{table}[t!]
 	\centering
@@ -569,7 +566,7 @@ This experiment evaluates the system as a relevant information provider concerni
 	\caption{Number of logins and time spent (mean, median, and range) in the chatbots.}
 \end{table}
 
-Table \ref{tab:usage} illustrates the usage made by students in the different subjects. It could be detected that students in Colombia used \gls{ViLT} less than students in Spain in both subjects. Moreover, similar subjects based on statistics have a small ratio of time spent in the tool and few logins per number of students. It is important to remark that \emph{Data Mining} only had $4$ students, while \emph{Statistical Inference} and \emph{Probability and Statistics} had a higher number of them. 
+Table \ref{tab:usage} illustrates the usage made by students in the different subjects. It could be detected that students in Colombia used \ac{vilt} less than students in Spain in both subjects. Moreover, similar subjects based on statistics have a small ratio of time spent in the tool and few logins per number of students. It is important to remark that \emph{Data Mining} only had $4$ students, while \emph{Statistical Inference} and \emph{Probability and Statistics} had a higher number of them. 
 
 On the other hand, \emph{Advanced Architectures of Computation}, \emph{Artificial Intelligence} and \emph{Statistical Inference} had acceptable time spent ratios, having the first almost the double of time spent ratio than others. It is important to remark that the grades in these three subjects were higher. That increase was greatest in \emph{Advanced Computing Architectures}, where it was the first time in $6$ years that more than $80\%$ students passed the course.
 
@@ -596,11 +593,11 @@ Therefore, it can be concluded that the tool was useful and successfully resolve
 
 \section{Conclusions}
 \label{sec:conclusions}
-This paper has presented the \gls{ViLT} framework for online tutoring tasks. The system supports both roles in the education process: students and educators. In the first case, tutorials are specifically designed with the syllabus provided by the educator for the subject. This knowledge is acquired by a \gls{LLM} that becomes an expert in the domain and acts as a virtual educator. In the second case, educators can evaluate the evolution of students over time during the development of subjects. This ensures proper control of the tool and effective monitoring of the course, enabling the educator to make adjustments in the development of the subject.
+This paper has presented the \ac{vilt} framework for online tutoring tasks. The system supports both roles in the education process: students and educators. In the first case, tutorials are specifically designed with the syllabus provided by the educator for the subject. This knowledge is acquired by a \ac{llm} that becomes an expert in the domain and acts as a virtual educator. In the second case, educators can evaluate the evolution of students over time during the development of subjects. This ensures proper control of the tool and effective monitoring of the course, enabling the educator to make adjustments in the development of the subject.
 
 Some experiments have been conducted to evaluate the system in real scenarios. Different subjects related to Computer Science from universities in Spain and Colombia were selected. The results showed that the system is useful for students and educators, providing support and easing the learning and teaching tasks. However, there is room to improve the system, specifically in the precision of the answers. 
 
-Furthermore, the final grades in certain subjects surpassed those of previous courses, potentially illustrating the system's effectiveness in working with students. This observation will be further examined to validate the premise and determine whether the trend persists. In addition, more experiments will be conducted with students from heterogeneous profiles and new, promising open-source models, such as DeepSeek-V$3$. These steps will lead \gls{ViLT} to a possible implementation stage in universities as a support tool for students and teachers.
+Furthermore, the final grades in certain subjects surpassed those of previous courses, potentially illustrating the system's effectiveness in working with students. This observation will be further examined to validate the premise and determine whether the trend persists. In addition, more experiments will be conducted with students from heterogeneous profiles and new, promising open-source models, such as DeepSeek-V$3$. These steps will lead \ac{vilt} to a possible implementation stage in universities as a support tool for students and teachers.
 
 \section*{Availability of data and materials}
 The datasets used and/or analysed during the current study are available from the corresponding author on reasonable request.
